@@ -41,7 +41,7 @@ public class ProgrammingLanguagesController {
 	}
 
 	@PostMapping("/add")
-	public Result add(@RequestBody ProgrammingLanguage language) throws Exception {
+	public Result add(@RequestBody ProgrammingLanguage language){
 
 		return this.languageService.add(language);
 	}
