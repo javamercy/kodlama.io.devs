@@ -3,15 +3,16 @@ package Kodlama.io.Devs.kodlama.io.webAPI.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Kodlama.io.Devs.kodlama.io.business.abstracts.ProgrammingLanguageService;
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.DataResult;
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.Result;
 import Kodlama.io.Devs.kodlama.io.entities.concretes.ProgrammingLanguage;
 
 @RestController
@@ -27,33 +28,34 @@ public class ProgrammingLanguagesController {
 	}
 
 	@GetMapping("/getall")
-	public List<ProgrammingLanguage> getAll() {
-
-		return languageService.getAll();
+	public DataResult<List<ProgrammingLanguage>> getAll() {
+		
+		
+		return this.languageService.getAll();
 	}
 
-	@GetMapping("/getbyid{id}")
-	public ProgrammingLanguage getById(@PathVariable(value = "id") int id) {
+	@GetMapping("/getbyid")
+	public DataResult<ProgrammingLanguage> getById(@RequestParam int id) {
 
-		return languageService.getById(id);
+		return this.languageService.getById(id);
 	}
 
-	@PostMapping(path = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void add(@RequestBody ProgrammingLanguage language) throws Exception {
+	@PostMapping("/add")
+	public Result add(@RequestBody ProgrammingLanguage language) throws Exception {
 
-		languageService.add(language);
+		return this.languageService.add(language);
 	}
 
-	@PostMapping(path = "/delete", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void delete(@RequestBody ProgrammingLanguage language) {
+	@PostMapping("/delete")
+	public Result delete(@RequestBody ProgrammingLanguage language) {
 
-		languageService.delete(language);
+		return this.languageService.delete(language);
 	}
 
-	@PostMapping(path = "/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public void update(@RequestBody ProgrammingLanguage language) {
+	@PostMapping("/update")
+	public Result update(@RequestBody ProgrammingLanguage language) {
 
-		languageService.update(language);
+		return this.languageService.update(language);
 	}
 
 }

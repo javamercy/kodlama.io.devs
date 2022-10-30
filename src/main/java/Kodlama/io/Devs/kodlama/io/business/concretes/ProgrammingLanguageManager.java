@@ -5,6 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import Kodlama.io.Devs.kodlama.io.business.abstracts.ProgrammingLanguageService;
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.DataResult;
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.ErrorResult;
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.Result;
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.SuccessDataResult;
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.SuccessResult;
 import Kodlama.io.Devs.kodlama.io.dataAccess.abstracts.ProgrammingLanguageRepository;
 import Kodlama.io.Devs.kodlama.io.entities.concretes.ProgrammingLanguage;
 
@@ -19,45 +24,50 @@ public class ProgrammingLanguageManager implements ProgrammingLanguageService {
 	}
 
 	@Override
-	public void add(ProgrammingLanguage language) throws Exception {
+	public Result add(ProgrammingLanguage language) {
 
 		if (checkIfNameEmpty(language)) {
-			throw new Exception("Name cannot be empty!");
+			return new ErrorResult("Name cannot be empty!");
 		}
 
 		if (checkIfNameExists(language)) {
 
-			throw new Exception("Name already exists!");
+			return new ErrorResult("Name already exists!");
 		}
 
 		languageRepository.add(language);
+		return new SuccessResult("Programa dili başarıyla eklendi.");
 
 	}
 
 	@Override
-	public void delete(ProgrammingLanguage language) {
+	public Result delete(ProgrammingLanguage language) {
 
 		languageRepository.delete(language);
+		return new SuccessResult("Silme işlemi başarılı!");
 
 	}
 
 	@Override
-	public void update(ProgrammingLanguage language) {
+	public Result update(ProgrammingLanguage language) {
 
 		languageRepository.update(language);
+		return new SuccessResult("Güncelleme işlemi başarılı");
 
 	}
 
 	@Override
-	public List<ProgrammingLanguage> getAll() {
+	public DataResult<List<ProgrammingLanguage>> getAll() {
 
-		return languageRepository.getAll();
+		return new SuccessDataResult<List<ProgrammingLanguage>>(languageRepository.getAll(), "Data listelendi.");
+
 	}
 
 	@Override
-	public ProgrammingLanguage getById(int id) {
+	public DataResult<ProgrammingLanguage> getById(int id) {
 
-		return languageRepository.getById(id);
+		return new SuccessDataResult<ProgrammingLanguage>(languageRepository.getById(id),
+				"Data filtreye göre listelendi.");
 	}
 
 	private boolean checkIfNameExists(ProgrammingLanguage language) {

@@ -2,18 +2,20 @@ package Kodlama.io.Devs.kodlama.io.business.abstracts;
 
 import java.util.List;
 
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.DataResult;
+import Kodlama.io.Devs.kodlama.io.core.utilities.results.Result;
 import Kodlama.io.Devs.kodlama.io.entities.concretes.ProgrammingLanguage;
 
 public interface ProgrammingLanguageService {
 
-	void add(ProgrammingLanguage language) throws Exception;
+	Result add(ProgrammingLanguage language);
 
-	void delete(ProgrammingLanguage language);
+	Result delete(ProgrammingLanguage language);
 
-	void update(ProgrammingLanguage language);
+	Result update(ProgrammingLanguage language);
 
-	List<ProgrammingLanguage> getAll();
+	DataResult<List<ProgrammingLanguage>> getAll();
 
-	ProgrammingLanguage getById(int id);
+	DataResult<ProgrammingLanguage> getById(int id);
 
 }
