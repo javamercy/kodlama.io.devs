@@ -33,18 +33,21 @@ public class InMemoryProgrammingLanguageRepository implements ProgrammingLanguag
 	@Override
 	public void update(ProgrammingLanguage language) {
 
-		var index = languages.indexOf(language);
+		System.out.println(language.getId());
+		System.out.println(language.getName());
+		for (var languageToUpdate : languages) {
+			if (languageToUpdate.getId() == language.getId()) {
 
-		var languageToUpdate = languages.get(index);
-
-		languageToUpdate.setName(language.getName());
+				languageToUpdate.setName(language.getName());
+			}
+		}
 
 	}
 
 	@Override
 	public void delete(ProgrammingLanguage language) {
 
-		languages.remove(language);
+		languages.removeIf(lang -> lang.getId() == language.getId());
 
 	}
 
