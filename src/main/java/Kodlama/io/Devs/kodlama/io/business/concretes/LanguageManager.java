@@ -25,14 +25,16 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public void add(CreateLanguageRequest createLanguageRequest) {
+	public void add(CreateLanguageRequest createLanguageRequest) throws Exception {
 
 		if (checkIfNameEmpty(createLanguageRequest)) {
 
+			throw new Exception("Language name cannot be empty or blank spaces!");
 		}
 
 		if (checkIfNameExists(createLanguageRequest)) {
 
+			throw new Exception("Language already exists!");
 		}
 
 		Language language = new Language();
@@ -44,6 +46,10 @@ public class LanguageManager implements LanguageService {
 	@Override
 	public void delete(DeleteLanguageRequest deleteLanguageRequest) {
 
+		Language language = new Language();
+		language.setId(deleteLanguageRequest.getId());
+
+		this.languageRepository.delete(language);
 	}
 
 	@Override

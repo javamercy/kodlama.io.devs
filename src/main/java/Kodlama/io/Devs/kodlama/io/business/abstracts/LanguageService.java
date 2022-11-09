@@ -10,7 +10,7 @@ import Kodlama.io.Devs.kodlama.io.business.responses.SingleLanguageResponse;
 
 public interface LanguageService {
 
-	void add(CreateLanguageRequest createLanguageRequest);
+	void add(CreateLanguageRequest createLanguageRequest) throws Exception;
 
 	void delete(DeleteLanguageRequest createLanguageRequest);
 
