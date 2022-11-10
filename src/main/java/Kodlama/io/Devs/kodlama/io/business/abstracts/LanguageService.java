@@ -2,11 +2,11 @@ package Kodlama.io.Devs.kodlama.io.business.abstracts;
 
 import java.util.List;
 
-import Kodlama.io.Devs.kodlama.io.business.requests.CreateLanguageRequest;
-import Kodlama.io.Devs.kodlama.io.business.requests.DeleteLanguageRequest;
-import Kodlama.io.Devs.kodlama.io.business.requests.UpdateLanguageRequest;
-import Kodlama.io.Devs.kodlama.io.business.responses.GetAllLanguagesResponse;
-import Kodlama.io.Devs.kodlama.io.business.responses.SingleLanguageResponse;
+import Kodlama.io.Devs.kodlama.io.business.requests.language.CreateLanguageRequest;
+import Kodlama.io.Devs.kodlama.io.business.requests.language.DeleteLanguageRequest;
+import Kodlama.io.Devs.kodlama.io.business.requests.language.UpdateLanguageRequest;
+import Kodlama.io.Devs.kodlama.io.business.responses.language.GetAllLanguagesResponse;
+import Kodlama.io.Devs.kodlama.io.business.responses.language.GetByIdLanguageResponse;
 
 public interface LanguageService {
 
@@ -18,6 +18,6 @@ public interface LanguageService {
 
 	List<GetAllLanguagesResponse> getAll();
 
-	SingleLanguageResponse getById(int id);
+	GetByIdLanguageResponse getById(int id);
 
 }

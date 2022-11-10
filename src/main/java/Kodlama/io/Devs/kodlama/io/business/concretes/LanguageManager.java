@@ -3,14 +3,18 @@ package Kodlama.io.Devs.kodlama.io.business.concretes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import Kodlama.io.Devs.kodlama.io.business.abstracts.FrameworkService;
 import Kodlama.io.Devs.kodlama.io.business.abstracts.LanguageService;
-import Kodlama.io.Devs.kodlama.io.business.requests.CreateLanguageRequest;
-import Kodlama.io.Devs.kodlama.io.business.requests.DeleteLanguageRequest;
-import Kodlama.io.Devs.kodlama.io.business.requests.UpdateLanguageRequest;
-import Kodlama.io.Devs.kodlama.io.business.responses.GetAllLanguagesResponse;
-import Kodlama.io.Devs.kodlama.io.business.responses.SingleLanguageResponse;
+import Kodlama.io.Devs.kodlama.io.business.requests.language.CreateLanguageRequest;
+import Kodlama.io.Devs.kodlama.io.business.requests.language.DeleteLanguageRequest;
+import Kodlama.io.Devs.kodlama.io.business.requests.language.UpdateLanguageRequest;
+import Kodlama.io.Devs.kodlama.io.business.responses.framework.GetAllFrameworksResponse;
+import Kodlama.io.Devs.kodlama.io.business.responses.language.GetAllLanguagesResponse;
+import Kodlama.io.Devs.kodlama.io.business.responses.language.GetByIdLanguageResponse;
 import Kodlama.io.Devs.kodlama.io.dataAccess.abstracts.LanguageRepository;
 import Kodlama.io.Devs.kodlama.io.entities.concretes.Language;
 
@@ -18,10 +22,13 @@ import Kodlama.io.Devs.kodlama.io.entities.concretes.Language;
 public class LanguageManager implements LanguageService {
 
 	private LanguageRepository languageRepository;
+	private FrameworkService frameworkService;
 
-	public LanguageManager(LanguageRepository languageRepository) {
+	@Autowired
+	public LanguageManager(LanguageRepository languageRepository, @Lazy FrameworkService frameworkService) {
 
 		this.languageRepository = languageRepository;
+		this.frameworkService = frameworkService;
 	}
 
 	@Override
@@ -57,11 +64,13 @@ public class LanguageManager implements LanguageService {
 
 	}
 
+	
 	@Override
 	public List<GetAllLanguagesResponse> getAll() {
 
 		List<Language> languages = this.languageRepository.findAll();
 		List<GetAllLanguagesResponse> languagesResponse = new ArrayList<GetAllLanguagesResponse>();
+		
 
 		for (Language language : languages) {
 
@@ -69,7 +78,17 @@ public class LanguageManager implements LanguageService {
 
 			responseItem.setId(language.getId());
 			responseItem.setName(language.getName());
+			
+			List<GetAllFrameworksResponse> relatedFrameworks = new ArrayList<GetAllFrameworksResponse>();
+			for (GetAllFrameworksResponse framework : this.frameworkService.getAll()) {
 
+				if (language.getId() == framework.getLanguageId()) {
+
+					relatedFrameworks.add(framework);
+				}
+				responseItem.setFrameworks(relatedFrameworks);
+
+			}
 			languagesResponse.add(responseItem);
 		}
 
@@ -79,9 +98,9 @@ public class LanguageManager implements LanguageService {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public SingleLanguageResponse getById(int id) {
+	public GetByIdLanguageResponse getById(int id) {
 
-		SingleLanguageResponse singleLanguageResponse = new SingleLanguageResponse();
+		GetByIdLanguageResponse singleLanguageResponse = new GetByIdLanguageResponse();
 
 		singleLanguageResponse.setName(languageRepository.getById(id).getName());
 		singleLanguageResponse.setId(languageRepository.getById(id).getId());
