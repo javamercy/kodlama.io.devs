@@ -13,6 +13,7 @@ import Kodlama.io.Devs.kodlama.io.business.requests.language.CreateLanguageReque
 import Kodlama.io.Devs.kodlama.io.business.requests.language.DeleteLanguageRequest;
 import Kodlama.io.Devs.kodlama.io.business.requests.language.UpdateLanguageRequest;
 import Kodlama.io.Devs.kodlama.io.business.responses.framework.GetAllFrameworksResponse;
+import Kodlama.io.Devs.kodlama.io.business.responses.language.GetAllLanguagesByDetailsResponse;
 import Kodlama.io.Devs.kodlama.io.business.responses.language.GetAllLanguagesResponse;
 import Kodlama.io.Devs.kodlama.io.business.responses.language.GetByIdLanguageResponse;
 import Kodlama.io.Devs.kodlama.io.dataAccess.abstracts.LanguageRepository;
@@ -62,23 +63,44 @@ public class LanguageManager implements LanguageService {
 	@Override
 	public void update(UpdateLanguageRequest updateLanguageRequest) {
 
+		var languageToUpdate = this.languageRepository.getReferenceById(updateLanguageRequest.getId());
+
+		languageToUpdate.setName(updateLanguageRequest.getName());
+		this.languageRepository.flush();
 	}
 
-	
 	@Override
 	public List<GetAllLanguagesResponse> getAll() {
 
 		List<Language> languages = this.languageRepository.findAll();
-		List<GetAllLanguagesResponse> languagesResponse = new ArrayList<GetAllLanguagesResponse>();
-		
+		List<GetAllLanguagesResponse> response = new ArrayList<GetAllLanguagesResponse>();
+
+		for (Language lang : languages) {
+
+			GetAllLanguagesResponse responseItem = new GetAllLanguagesResponse();
+			responseItem.setId(lang.getId());
+			responseItem.setName(lang.getName());
+
+			response.add(responseItem);
+
+		}
+
+		return response;
+	}
+
+	@Override
+	public List<GetAllLanguagesByDetailsResponse> getAllByDetail() {
+
+		List<Language> languages = this.languageRepository.findAll();
+		List<GetAllLanguagesByDetailsResponse> languagesResponse = new ArrayList<GetAllLanguagesByDetailsResponse>();
 
 		for (Language language : languages) {
 
-			GetAllLanguagesResponse responseItem = new GetAllLanguagesResponse();
+			GetAllLanguagesByDetailsResponse responseItem = new GetAllLanguagesByDetailsResponse();
 
 			responseItem.setId(language.getId());
 			responseItem.setName(language.getName());
-			
+
 			List<GetAllFrameworksResponse> relatedFrameworks = new ArrayList<GetAllFrameworksResponse>();
 			for (GetAllFrameworksResponse framework : this.frameworkService.getAll()) {
 
@@ -96,14 +118,13 @@ public class LanguageManager implements LanguageService {
 
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public GetByIdLanguageResponse getById(int id) {
 
 		GetByIdLanguageResponse singleLanguageResponse = new GetByIdLanguageResponse();
 
-		singleLanguageResponse.setName(languageRepository.getById(id).getName());
-		singleLanguageResponse.setId(languageRepository.getById(id).getId());
+		singleLanguageResponse.setName(languageRepository.getReferenceById(id).getName());
+		singleLanguageResponse.setId(languageRepository.getReferenceById(id).getId());
 
 		return singleLanguageResponse;
 

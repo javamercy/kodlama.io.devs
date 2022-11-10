@@ -5,6 +5,7 @@ import java.util.List;
 import Kodlama.io.Devs.kodlama.io.business.requests.language.CreateLanguageRequest;
 import Kodlama.io.Devs.kodlama.io.business.requests.language.DeleteLanguageRequest;
 import Kodlama.io.Devs.kodlama.io.business.requests.language.UpdateLanguageRequest;
+import Kodlama.io.Devs.kodlama.io.business.responses.language.GetAllLanguagesByDetailsResponse;
 import Kodlama.io.Devs.kodlama.io.business.responses.language.GetAllLanguagesResponse;
 import Kodlama.io.Devs.kodlama.io.business.responses.language.GetByIdLanguageResponse;
 
@@ -16,8 +17,11 @@ public interface LanguageService {
 
 	void update(UpdateLanguageRequest createLanguageRequest);
 
+	List<GetAllLanguagesByDetailsResponse> getAllByDetail();
+	
 	List<GetAllLanguagesResponse> getAll();
 
 	GetByIdLanguageResponse getById(int id);
+
 
 }

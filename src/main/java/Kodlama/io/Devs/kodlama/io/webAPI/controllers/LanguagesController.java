@@ -14,6 +14,7 @@ import Kodlama.io.Devs.kodlama.io.business.abstracts.LanguageService;
 import Kodlama.io.Devs.kodlama.io.business.requests.language.CreateLanguageRequest;
 import Kodlama.io.Devs.kodlama.io.business.requests.language.DeleteLanguageRequest;
 import Kodlama.io.Devs.kodlama.io.business.requests.language.UpdateLanguageRequest;
+import Kodlama.io.Devs.kodlama.io.business.responses.language.GetAllLanguagesByDetailsResponse;
 import Kodlama.io.Devs.kodlama.io.business.responses.language.GetAllLanguagesResponse;
 import Kodlama.io.Devs.kodlama.io.business.responses.language.GetByIdLanguageResponse;
 
@@ -27,6 +28,12 @@ public class LanguagesController {
 	public LanguagesController(LanguageService languageService) {
 
 		this.languageService = languageService;
+	}
+
+	@GetMapping("/getallbydetails")
+	public List<GetAllLanguagesByDetailsResponse> getAllByDetails() {
+
+		return this.languageService.getAllByDetail();
 	}
 
 	@GetMapping("/getall")

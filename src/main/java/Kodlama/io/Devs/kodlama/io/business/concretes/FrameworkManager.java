@@ -10,7 +10,9 @@ import Kodlama.io.Devs.kodlama.io.business.abstracts.FrameworkService;
 import Kodlama.io.Devs.kodlama.io.business.abstracts.LanguageService;
 import Kodlama.io.Devs.kodlama.io.business.requests.framework.CreateFrameworkRequest;
 import Kodlama.io.Devs.kodlama.io.business.requests.framework.DeleteFrameworkRequest;
+import Kodlama.io.Devs.kodlama.io.business.requests.framework.UpdateFrameworkRequest;
 import Kodlama.io.Devs.kodlama.io.business.responses.framework.GetAllFrameworksResponse;
+import Kodlama.io.Devs.kodlama.io.business.responses.framework.GetByIdFrameworkResponse;
 import Kodlama.io.Devs.kodlama.io.business.responses.language.GetByIdLanguageResponse;
 import Kodlama.io.Devs.kodlama.io.dataAccess.abstracts.FrameworkRepository;
 import Kodlama.io.Devs.kodlama.io.entities.concretes.Framework;
@@ -47,6 +49,11 @@ public class FrameworkManager implements FrameworkService {
 	}
 
 	@Override
+	public void update(UpdateFrameworkRequest updateFrameworkRequest) {
+
+	}
+
+	@Override
 	public List<GetAllFrameworksResponse> getAll() {
 
 		List<GetAllFrameworksResponse> getAllFrameworksResponses = new ArrayList<GetAllFrameworksResponse>();
@@ -58,12 +65,25 @@ public class FrameworkManager implements FrameworkService {
 			GetAllFrameworksResponse responseItem = new GetAllFrameworksResponse();
 			responseItem.setId(framework.getId());
 			responseItem.setLanguageId(framework.getLanguage().getId());
-			responseItem.setName(framework.getName());
 
 			getAllFrameworksResponses.add(responseItem);
 		}
 
 		return getAllFrameworksResponses;
+	}
+
+	@Override
+	public GetByIdFrameworkResponse getById(int id) {
+
+		GetByIdFrameworkResponse response = new GetByIdFrameworkResponse();
+
+		Framework framework = this.frameworkRepository.getReferenceById(id);
+
+		response.setId(framework.getId());
+		response.setName(framework.getName());
+
+		return response;
+
 	}
 
 	@Override
