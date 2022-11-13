@@ -33,7 +33,7 @@ public class LanguagesController {
 	@GetMapping("/getallbydetails")
 	public List<GetAllLanguagesByDetailsResponse> getAllByDetails() {
 
-		return this.languageService.getAllByDetail();
+		return this.languageService.getAllByDetails();
 	}
 
 	@GetMapping("/getall")

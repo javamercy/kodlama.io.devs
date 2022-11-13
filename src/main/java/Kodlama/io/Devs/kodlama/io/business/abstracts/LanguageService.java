@@ -17,7 +17,7 @@ public interface LanguageService {
 
 	void update(UpdateLanguageRequest createLanguageRequest);
 
-	List<GetAllLanguagesByDetailsResponse> getAllByDetail();
+	List<GetAllLanguagesByDetailsResponse> getAllByDetails();
 	
 	List<GetAllLanguagesResponse> getAll();
 

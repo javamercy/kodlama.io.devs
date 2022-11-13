@@ -55,7 +55,7 @@ public class LanguageManager implements LanguageService {
 	public void delete(DeleteLanguageRequest deleteLanguageRequest) {
 
 		Language language = new Language();
-		language.setId(deleteLanguageRequest.getId());
+		language = this.languageRepository.getReferenceById(deleteLanguageRequest.getId());
 
 		this.languageRepository.delete(language);
 	}
@@ -89,7 +89,7 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public List<GetAllLanguagesByDetailsResponse> getAllByDetail() {
+	public List<GetAllLanguagesByDetailsResponse> getAllByDetails() {
 
 		List<Language> languages = this.languageRepository.findAll();
 		List<GetAllLanguagesByDetailsResponse> languagesResponse = new ArrayList<GetAllLanguagesByDetailsResponse>();

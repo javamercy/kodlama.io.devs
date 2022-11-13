@@ -51,6 +51,12 @@ public class FrameworkManager implements FrameworkService {
 	@Override
 	public void update(UpdateFrameworkRequest updateFrameworkRequest) {
 
+		Framework frameworkToUpdate = this.frameworkRepository.getReferenceById(updateFrameworkRequest.getId());
+
+		frameworkToUpdate.setName(updateFrameworkRequest.getName());
+
+		this.frameworkRepository.flush();
+
 	}
 
 	@Override
@@ -65,8 +71,10 @@ public class FrameworkManager implements FrameworkService {
 			GetAllFrameworksResponse responseItem = new GetAllFrameworksResponse();
 			responseItem.setId(framework.getId());
 			responseItem.setLanguageId(framework.getLanguage().getId());
+			responseItem.setName(framework.getName());
 
 			getAllFrameworksResponses.add(responseItem);
+
 		}
 
 		return getAllFrameworksResponses;
